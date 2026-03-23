@@ -1,0 +1,44 @@
+---
+description: Clean code conventions for TypeScript in this project
+globs: **/*.ts
+alwaysApply: false
+---
+
+# Clean Code
+
+## Functions
+
+- Single responsibility -- one function does one thing
+- Small: if a function needs a comment block explaining sections, split it
+- Explicit return types on all exported functions
+- Use dependency injection for external services (pass as parameter with a default)
+
+## Naming
+
+- Descriptive names that reveal intent -- no abbreviations
+- Avoid generic names: `data`, `info`, `temp`, `result`, `item`, `stuff`
+- Boolean variables/functions start with `is`, `has`, `can`, `should`
+- Functions that return a value: noun or `get*`; functions that perform an action: verb
+
+## Types
+
+- No `any` -- use `unknown` + type narrowing when the type is truly unknown
+- Prefer interfaces for object shapes, type aliases for unions/intersections
+- Use `readonly` for data that should not be mutated
+
+## Variables
+
+- `const` by default; `let` only when reassignment is necessary; never `var`
+- Declare variables close to where they are used
+- No unused variables or imports (enforced by `deno lint`)
+
+## Error handling
+
+- Never swallow errors with empty catch blocks
+- Throw descriptive `Error` messages that tell the user what went wrong and how to fix it
+- Prefer custom error messages over re-throwing raw errors
+
+## Dead code
+
+- No commented-out code -- use version control instead
+- Remove unused functions, imports, and variables before committing

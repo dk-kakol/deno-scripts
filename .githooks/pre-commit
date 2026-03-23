@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+echo "Running pre-commit checks..."
+
+deno fmt --check
+deno lint
+deno check scripts/ shared/
+deno test --allow-env
+
+echo "All checks passed."

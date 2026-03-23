@@ -1,0 +1,10 @@
+services:
+  deno:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./scripts:/app/scripts
+      - ./shared:/app/shared
+    # Override the command at runtime, e.g.:
+    #   docker compose run deno deno task chat "What is Deno?"

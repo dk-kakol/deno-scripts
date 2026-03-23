@@ -1,0 +1,77 @@
+---
+description: Deno 2.x coding standards and conventions for this project
+globs: **/*.ts
+alwaysApply: false
+---
+
+# Deno 2.x Conventions
+
+## Imports
+
+Use the import map in `deno.json` — never write bare `npm:` or `jsr:` specifiers inline:
+
+```typescript
+// ❌ BAD
+import { assertEquals } from "jsr:@std/assert@^1";
+import { generateText } from "npm:ai";
+
+// ✅ GOOD
+import { assertEquals } from "@std/assert";
+import { generateText } from "ai";
+```
+
+## Standard Library
+
+Prefer `@std/` packages over third-party alternatives:
+
+- `@std/assert` for test assertions (not chai/jest expect)
+- `@std/path` for path manipulation (not path-browserify)
+- `@std/fs` for file system helpers
+
+## Tests
+
+Use `Deno.test()` — not Jest, Vitest, or Mocha:
+
+```typescript
+// ✅ GOOD
+Deno.test("description", () => {
+  assertEquals(actual, expected);
+});
+```
+
+Test files are named `*_test.ts`. Run with `deno task test`.
+
+## Permissions
+
+Always use the minimum required permissions. Specify them explicitly in tasks:
+
+```
+--allow-net   // network access
+--allow-env   // environment variable access
+--allow-read  // file system reads
+--allow-write // file system writes
+```
+
+## Environment Variables
+
+Load `.env` via the `--env-file` flag (built into Deno 2) — no `@std/dotenv` needed.
+Validate variables at startup using `getEnv()` from `shared/env.ts`.
+
+## Module Conventions
+
+- Keep entry points thin (`main.ts`) — they validate env and orchestrate
+- Put pure logic in separate files for testability (e.g. `chat.ts`)
+- Use dependency injection for external services (pass `model` as a parameter)
+- Shared utilities live in `shared/`
+
+## Tasks
+
+Run common operations via `deno.json` tasks:
+
+```bash
+deno task chat        # run the OpenAI chat script
+deno task test        # run all tests
+deno task fmt         # auto-format
+deno task check       # fmt + lint + typecheck
+deno task setup-hooks # activate pre-commit hook (once after cloning)
+```

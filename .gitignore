@@ -1,0 +1,17 @@
+# Environment secrets
+.env*
+!.env.example
+
+# Deno / npm dependencies
+node_modules/
+
+# Script output directories (keep the empty dirs via .gitkeep)
+scripts/*/output/*
+!scripts/*/output/.gitkeep
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# IDE folders (keep .vscode/ — contains Deno LSP settings)
+.idea/
