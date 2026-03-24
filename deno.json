@@ -3,7 +3,8 @@
   "tasks": {
     "chat": "deno run --env-file --allow-net --allow-env scripts/openai-chat/main.ts",
     "notion-page": "deno run --env-file --allow-net --allow-env scripts/first-notion-integration/main.ts",
-    "test": "deno test --allow-env",
+    "notion-interview": "deno run --env-file --allow-net --allow-env --allow-read scripts/notion-interview/main.ts",
+    "test": "deno test --allow-env --allow-read --allow-write",
     "fmt": "deno fmt",
     "check": "deno fmt --check && deno lint && deno check scripts/ shared/",
     "setup-hooks": "git config core.hooksPath .githooks"
@@ -13,11 +14,16 @@
     "@std/assert": "jsr:@std/assert@^1",
     "ai": "npm:ai@^4",
     "@ai-sdk/openai": "npm:@ai-sdk/openai@^1",
-    "@notionhq/client": "npm:@notionhq/client@^2"
+    "@notionhq/client": "npm:@notionhq/client@^2",
+    "@tryfabric/martian": "npm:@tryfabric/martian@^1",
+    "@std/path": "jsr:@std/path@^1"
   },
   "fmt": {
     "lineWidth": 100,
-    "singleQuote": false
+    "singleQuote": false,
+    "exclude": [
+      "scripts/notion-interview/input/import-page-from-notion/"
+    ]
   },
   "lint": {
     "rules": {
